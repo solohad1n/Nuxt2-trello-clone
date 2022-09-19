@@ -21,10 +21,16 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: [
+    '@/assets/styles.scss'
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+  ],
+  router: {
+    middleware: ['auth']
+  },
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -39,6 +45,32 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    [
+      '@nuxtjs/firebase',
+      {
+        config: {
+          apiKey: "AIzaSyAQURc5B0PUpSDsFHAn58G8VWPGDrE9UTk",
+          authDomain: "trello-clone-ff9ab.firebaseapp.com",
+          projectId: "trello-clone-ff9ab",
+          storageBucket: "trello-clone-ff9ab.appspot.com",
+          messagingSenderId: "818565836346",
+          appId: "1:818565836346:web:aae6206aa4b83f352fcf03"
+        },
+        services: {
+          auth: {
+            persistence: 'local', // default
+            initialize: {
+              onAuthStateChangedAction: 'onAuthStateChangedAction',
+              subscribeManually: false
+            },
+            ssr: false, // default
+          },
+          firestore: true,
+          storage: true,
+
+        }
+      }
+    ],
   ],
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
@@ -51,20 +83,6 @@ export default {
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
-    theme: {
-      dark: false,
-      themes: {
-        dark: {
-          primary: colors.blue.darken2,
-          accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3,
-        },
-      },
-    },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
